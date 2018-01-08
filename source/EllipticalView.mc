@@ -4,16 +4,19 @@ using Toybox.Time.Gregorian;
 using Toybox.Application;
 using Toybox.Math;
 using Toybox.System;
+using Toybox.Attention;
+using Toybox.System as Sys;
 
 var timer1 = null;
 var stepsCount = 0;
 var accel = null;
 
-var SENSITIVITY = 200;
-var SAMPLES_NUM = 5;
+var SENSITIVITY = 450;
+//var SAMPLES_NUM = 20;
 var current_direction = 0;
-var samples = [0, 0, 0, 0, 0];
+//var samples = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0];
 var samples_recorded = 0;
+var mean_sum = 0;
 var ready_to_save = false;
 var last_maximum = 0;
 var last_minimum = 0;
@@ -38,18 +41,22 @@ class EllipticalView extends Ui.View {
 		    	
 		    	var samples_sum = 0;
 		    	
-		    	for(var i=0; i<SAMPLES_NUM; i++){
+		    	/*for(var i=0; i<SAMPLES_NUM; i++){
 		    		samples_sum += samples[i];
-		    	}
+		    	}*/
 		    	
-		    	var mean = samples_sum/SAMPLES_NUM;
+		    	//var mean = samples_sum/SAMPLES_NUM;
+		    	++samples_recorded;
+		    	mean_sum = mean_sum + x_accel;
+		    	var mean = mean_sum/samples_recorded;
 		    	
 		    	counter++;
 		    	if(counter>100){		    		
 		    		System.println(buffer);
 		    		buffer = "";
-		    	}		    	
-		    	buffer+=(stepsCount+";"+current_direction+";"+x_accel+";"+mean+";"+last_maximum+";"+last_minimum+"#");
+		    	}		 
+		    	
+		    	buffer+=(Sys.getTimer()+";"+stepsCount+";"+current_direction+";"+x_accel+";"+y_accel+";"+mean+";"+last_maximum+";"+last_minimum+"#");
 		    	
 		    	if(current_direction == 0){
 		    		current_direction = direction(x_accel - mean);
@@ -63,7 +70,9 @@ class EllipticalView extends Ui.View {
 		    			last_maximum = 0; //reset maximum to record latest fresh minimum values
 		    		}
 		    		
-		    	}else if(ready_to_save == true){
+		    	}
+		    	
+		    	if(ready_to_save == true){
 		    		/* only increment step count if significant change detected*/
 		    		if(current_direction < 0){
 		    			if(last_maximum - x_accel > SENSITIVITY){
@@ -79,11 +88,11 @@ class EllipticalView extends Ui.View {
 		    	}
 		    	
 		    	/**recording history values, mean and maximums**/
-		    	for(var i=0; i<SAMPLES_NUM-1; i++){
+		    	/*for(var i=0; i<SAMPLES_NUM-1; i++){
 		    		samples[i] = samples[i+1];
-		    	}
+		    	}*
 		    	
-		    	samples[SAMPLES_NUM-1] = x_accel;		    	
+		    	samples[SAMPLES_NUM-1] = x_accel;*/		    	
 		    	
 		    	if(current_direction < 0){
 		    		if(x_accel < last_minimum){
@@ -129,6 +138,8 @@ class EllipticalView extends Ui.View {
 
     // Load your resources here
     function onLayout(dc) {
+    
+    	vibrate();
         setLayout(Rez.Layouts.MainLayout(dc));
         
         if(timer1 == null){
@@ -163,4 +174,9 @@ class EllipticalView extends Ui.View {
     function onHide() {
     }
 
+	function vibrate(){
+  		if (Attention has :playTone) {
+	    	Attention.playTone(Attention.TONE_LOUD_BEEP);
+		}
+	}
 }
