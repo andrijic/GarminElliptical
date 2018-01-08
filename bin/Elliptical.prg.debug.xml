@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<debugInfo>
+<pcToLineNum>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="26" pc="268435456" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="27" pc="268435460" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="29" pc="268435479" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="32" pc="268435495" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="33" pc="268435522" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="34" pc="268435538" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="35" pc="268435554" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="39" pc="268435570" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="41" pc="268435577" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="42" pc="268435598" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="45" pc="268435627" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="47" pc="268435640" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="48" pc="268435659" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="49" pc="268435676" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="50" pc="268435700" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="52" pc="268435716" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="54" pc="268435807" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="55" pc="268435824" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="57" pc="268435879" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="58" pc="268435903" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="60" pc="268435913" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="61" pc="268435930" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="63" pc="268435946" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="68" pc="268435976" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="69" pc="268435993" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="70" pc="268436016" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="71" pc="268436035" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="74" pc="268436068" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="75" pc="268436091" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="76" pc="268436110" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="82" pc="268436129" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="83" pc="268436156" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="86" pc="268436197" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="88" pc="268436222" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="89" pc="268436239" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="90" pc="268436253" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="93" pc="268436286" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="94" pc="268436300" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="100" pc="268436319" symbol="secondPassedEvent"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="103" pc="268436336" symbol="abs"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="104" pc="268436340" symbol="abs"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="105" pc="268436351" symbol="abs"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="107" pc="268436369" symbol="abs"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="111" pc="268436373" symbol="direction"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="112" pc="268436377" symbol="direction"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="113" pc="268436388" symbol="direction"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="115" pc="268436397" symbol="direction"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="119" pc="268436404" symbol="initialize"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="120" pc="268436408" symbol="initialize"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="131" pc="268436427" symbol="onLayout"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="132" pc="268436431" symbol="onLayout"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="134" pc="268436468" symbol="onLayout"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="136" pc="268436481" symbol="onLayout"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="137" pc="268436517" symbol="onLayout"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="144" pc="268436562" symbol="onShow"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="148" pc="268436567" symbol="onUpdate"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="150" pc="268436571" symbol="onUpdate"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="152" pc="268436591" symbol="onUpdate"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="153" pc="268436627" symbol="onUpdate"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="154" pc="268436639" symbol="onUpdate"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="156" pc="268436675" symbol="onUpdate"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalView.mc" lineNum="163" pc="268436760" symbol="onHide"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalMenuDelegate.mc" lineNum="6" pc="268436765" symbol="initialize"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalMenuDelegate.mc" lineNum="7" pc="268436769" symbol="initialize"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalMenuDelegate.mc" lineNum="10" pc="268436788" symbol="onMenuItem"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalMenuDelegate.mc" lineNum="11" pc="268436792" symbol="onMenuItem"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalMenuDelegate.mc" lineNum="12" pc="268436803" symbol="onMenuItem"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalMenuDelegate.mc" lineNum="14" pc="268436838" symbol="onMenuItem"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalDelegate.mc" lineNum="5" pc="268436863" symbol="initialize"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalDelegate.mc" lineNum="6" pc="268436867" symbol="initialize"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalDelegate.mc" lineNum="9" pc="268436886" symbol="onMenu"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalDelegate.mc" lineNum="10" pc="268436890" symbol="onMenu"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalDelegate.mc" lineNum="11" pc="268436974" symbol="onMenu"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalApp.mc" lineNum="6" pc="268436978" symbol="initialize"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalApp.mc" lineNum="7" pc="268436982" symbol="initialize"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalApp.mc" lineNum="11" pc="268437001" symbol="onStart"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalApp.mc" lineNum="15" pc="268437006" symbol="onStop"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalApp.mc" lineNum="19" pc="268437011" symbol="getInitialView"/>
+<entry filename="D:\\Development\\EclipseWorkspace\\Elliptical\\source\\EllipticalApp.mc" lineNum="20" pc="268437015" symbol="getInitialView"/>
+<entry filename="Rez" lineNum="15" pc="268437083" symbol="initialize"/>
+<entry filename="Rez" lineNum="16" pc="268437087" symbol="initialize"/>
+<entry filename="Rez" lineNum="17" pc="268437105" symbol="initialize"/>
+<entry filename="Rez" lineNum="18" pc="268437157" symbol="initialize"/>
+<entry filename="Rez" lineNum="34" pc="268437210" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="38" pc="268437222" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="39" pc="268437385" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="40" pc="268437410" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="41" pc="268437462" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="42" pc="268437578" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="45" pc="268437630" symbol="MainLayout"/>
+</pcToLineNum>
+<symbolTable>
+<entry id="8388644" module="true" symbol="System"/>
+<entry field="true" id="11" symbol="SAMPLES_NUM"/>
+<entry id="8389124" method="true" symbol="onUpdate"/>
+<entry id="8389349" symbol="justification"/>
+<entry field="true" id="19" symbol="buffer"/>
+<entry id="35" method="true" symbol="direction"/>
+<entry field="true" id="8388611" module="true" symbol="Toybox"/>
+<entry id="28" object="true" symbol="MainMenu"/>
+<entry id="8388770" module="true" object="true" symbol="Strings"/>
+<entry id="8389280" method="true" symbol="getInitialView"/>
+<entry field="true" id="15" symbol="ready_to_save"/>
+<entry id="20" object="true" symbol="EllipticalView"/>
+<entry id="29" method="true" symbol="MainLayout"/>
+<entry id="8388769" module="true" object="true" symbol="Rez"/>
+<entry id="8389123" method="true" symbol="onShow"/>
+<entry id="8388924" module="true" symbol="Gregorian"/>
+<entry id="8388702" method="true" symbol="initialize"/>
+<entry field="true" id="33" symbol="AppName"/>
+<entry field="true" id="10" symbol="SENSITIVITY"/>
+<entry field="true" id="12" symbol="current_direction"/>
+<entry field="true" id="8389605" symbol="accel"/>
+<entry id="8389080" method="true" symbol="onMenu"/>
+<entry field="true" id="17" symbol="last_minimum"/>
+<entry id="37" symbol="item_2"/>
+<entry id="36" symbol="item_1"/>
+<entry id="8388641" module="true" symbol="Math"/>
+<entry field="true" id="27" symbol="LauncherIcon"/>
+<entry field="true" id="31" symbol="menu_label_2"/>
+<entry field="true" id="30" symbol="menu_label_1"/>
+<entry field="true" id="8388696" symbol="timer1"/>
+<entry id="8389281" method="true" symbol="onStop"/>
+<entry field="true" id="8389065" symbol="locY"/>
+<entry field="true" id="8389064" symbol="locX"/>
+<entry id="8388771" module="true" object="true" symbol="Drawables"/>
+<entry id="8389122" method="true" symbol="onLayout"/>
+<entry field="true" id="16" symbol="last_maximum"/>
+<entry id="8389279" method="true" symbol="onStart"/>
+<entry id="34" method="true" symbol="secondPassedEvent"/>
+<entry id="8388774" method="true" symbol="abs"/>
+<entry field="true" id="26" symbol="id_monkey"/>
+<entry field="true" id="18" symbol="counter"/>
+<entry id="8389348" symbol="font"/>
+<entry id="22" object="true" symbol="EllipticalDelegate"/>
+<entry id="8389347" symbol="color"/>
+<entry id="8389109" method="true" symbol="onMenuItem"/>
+<entry id="21" object="true" symbol="EllipticalMenuDelegate"/>
+<entry id="25" module="true" symbol="Layouts"/>
+<entry field="true" id="32" symbol="prompt"/>
+<entry id="8389125" method="true" symbol="onHide"/>
+<entry id="8389345" symbol="rezId"/>
+<entry id="8390088" module="true" object="true" symbol="JsonData"/>
+<entry id="8389346" symbol="text"/>
+<entry field="true" id="9" symbol="stepsCount"/>
+<entry field="true" id="8389063" symbol="identifier"/>
+<entry id="24" module="true" symbol="Menus"/>
+<entry id="8388772" module="true" object="true" symbol="Fonts"/>
+<entry id="23" object="true" symbol="EllipticalApp"/>
+<entry field="true" id="14" symbol="samples_recorded"/>
+<entry id="8388635" module="true" symbol="Application"/>
+<entry field="true" id="13" symbol="samples"/>
+</symbolTable>
+<localVars>
+<entry endPc="268435627" name="i" stackId="6" startPc="268435598"/>
+<entry endPc="268436197" name="i" stackId="8" startPc="268436156"/>
+<entry endPc="268436316" name="y_accel" stackId="3" startPc="268435522"/>
+<entry endPc="268436316" name="mean" stackId="7" startPc="268435522"/>
+<entry endPc="268436316" name="z_accel" stackId="4" startPc="268435522"/>
+<entry endPc="268436316" name="samples_sum" stackId="5" startPc="268435522"/>
+<entry endPc="268436316" name="x_accel" stackId="2" startPc="268435522"/>
+<entry endPc="268436335" name="info" stackId="1" startPc="268435460"/>
+<entry endPc="268436373" name="input" stackId="1" startPc="268436336"/>
+<entry endPc="268436404" name="input" stackId="1" startPc="268436373"/>
+<entry endPc="268436562" name="dc" stackId="1" startPc="268436427"/>
+<entry endPc="268436760" name="dc" stackId="1" startPc="268436567"/>
+<entry endPc="268436863" name="item" stackId="1" startPc="268436788"/>
+<entry endPc="268437006" name="state" stackId="1" startPc="268437001"/>
+<entry endPc="268437011" name="state" stackId="1" startPc="268437006"/>
+<entry endPc="268437657" name="rez_cmp_local_bitmap_HB4XFKSM3I" stackId="2" startPc="268437222"/>
+<entry endPc="268437657" name="rez_cmp_local_bitmap_HB4XFKSM3I_fontHeight" stackId="3" startPc="268437222"/>
+<entry endPc="268437657" name="rez_cmp_local_bitmap_id_monkey" stackId="4" startPc="268437222"/>
+<entry endPc="268437658" name="dc" stackId="1" startPc="268437210"/>
+</localVars>
+<annotations/>
+<functions>
+<functionEntry accessMode="public" name="secondPassedEvent" parent="EllipticalView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="abs" parent="EllipticalView">
+<param id="input"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="direction" parent="EllipticalView">
+<param id="input"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="EllipticalView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onLayout" parent="EllipticalView">
+<param id="dc"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onShow" parent="EllipticalView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onUpdate" parent="EllipticalView">
+<param id="dc"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onHide" parent="EllipticalView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="EllipticalMenuDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onMenuItem" parent="EllipticalMenuDelegate">
+<param id="item"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="EllipticalDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onMenu" parent="EllipticalDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="EllipticalApp">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onStart" parent="EllipticalApp">
+<param id="state"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onStop" parent="EllipticalApp">
+<param id="state"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getInitialView" parent="EllipticalApp">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="MainMenu">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="MainLayout" parent="Layouts">
+<param id="dc"/>
+<documentation><![CDATA[<div class="description"> Draw the layout<br/> param The context<br/></div>]]></documentation>
+</functionEntry>
+</functions>
+<dataEntryOffsetMappings>
+<dataEntry offset="87" parentId="" symbolId="globals" type="module"/>
+<dataEntry offset="302" parentId="globals" symbolId="EllipticalMenuDelegate" type="class"/>
+<dataEntry offset="357" parentId="globals" symbolId="EllipticalApp" type="class"/>
+<dataEntry offset="428" parentId="globals" symbolId="EllipticalDelegate" type="class"/>
+<dataEntry offset="483" parentId="globals" symbolId="Rez" type="module"/>
+<dataEntry offset="562" parentId="Rez" symbolId="Drawables" type="module"/>
+<dataEntry offset="609" parentId="Rez" symbolId="Menus" type="module"/>
+<dataEntry offset="648" parentId="Menus" symbolId="MainMenu" type="class"/>
+<dataEntry offset="695" parentId="Rez" symbolId="Fonts" type="module"/>
+<dataEntry offset="726" parentId="Rez" symbolId="JsonData" type="module"/>
+<dataEntry offset="757" parentId="Rez" symbolId="Layouts" type="module"/>
+<dataEntry offset="796" parentId="Rez" symbolId="Strings" type="module"/>
+<dataEntry offset="859" parentId="globals" symbolId="EllipticalView" type="class"/>
+</dataEntryOffsetMappings>
+</debugInfo>
