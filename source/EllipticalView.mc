@@ -6,15 +6,21 @@ using Toybox.Math;
 using Toybox.System;
 using Toybox.Attention;
 using Toybox.System as Sys;
+using Toybox.FitContributor as FitContributor;
+using Toybox.ActivityRecording;
 
 var timer1 = null;
 var stepsCount = 0;
 var accel = null;
 
+var STEP_LENGTH = 0.95;
 var SENSITIVITY = 450;
-//var SAMPLES_NUM = 20;
+
+var mLogger = null;
+var fitField_distance = null;
+var mSession = null;
+
 var current_direction = 0;
-//var samples = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0];
 var samples_recorded = 0;
 var mean_sum = 0;
 var ready_to_save = false;
@@ -27,7 +33,19 @@ var buffer = "";
 class EllipticalView extends Ui.View {
     
     function secondPassedEvent(){
-    	var info = Sensor.getInfo();
+    	countSteps();
+	    updateFitData();
+	    	    
+		Ui.requestUpdate();
+	}
+	
+	function updateFitData(){
+		System.println("recording data: "+stepsCount * STEP_LENGTH);
+		fitField_distance.setData(stepsCount * STEP_LENGTH);
+	}
+	
+	function countSteps(){
+		var info = Sensor.getInfo();
     	
     	accel = info.accel;
     	
@@ -104,9 +122,6 @@ class EllipticalView extends Ui.View {
 		    		}
 		    	}
 	    	}
-	    
-	    
-		Ui.requestUpdate();
 	}
 	
 	function abs(input){
@@ -127,7 +142,29 @@ class EllipticalView extends Ui.View {
 	
 	function initialize() {
         View.initialize();
+        
+        //mLogger = new SensorLogging.SensorLogger({:enableAccelerometer => true});
+        mSession = ActivityRecording.createSession({
+        	:name=>"myElliptical", 
+        	:sport=>ActivityRecording.SPORT_GENERIC ,
+        	:subSport=>ActivityRecording.SUB_SPORT_ELLIPTICAL
+        	});
+                       
+        fitField_distance = mSession.createField("elliptical", 0, FitContributor.DATA_TYPE_FLOAT,  
+        { :mesgType=>FitContributor.MESG_TYPE_RECORD, :units=>"m" });//, :nativeNum=>5}); //5 ili 9
     }
+    
+  	function startLogging() {
+    	mSession.start();
+	}
+
+	function stopLogging() {
+    	mSession.stop();
+	}
+
+	function saveLogging() {
+    	mSession.save();
+	}
     
     /*function getDebugData(){
     	
@@ -138,8 +175,6 @@ class EllipticalView extends Ui.View {
 
     // Load your resources here
     function onLayout(dc) {
-    
-    	vibrate();
         setLayout(Rez.Layouts.MainLayout(dc));
         
         if(timer1 == null){
@@ -147,12 +182,15 @@ class EllipticalView extends Ui.View {
 	    	timer1 = new Timer.Timer();
         	timer1.start(method(:secondPassedEvent), 50, true);
         }
+        
+        
     }
 
     // Called when this View is brought to the foreground. Restore
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() {
+    	startLogging();
     }
 
     // Update the view
@@ -172,6 +210,8 @@ class EllipticalView extends Ui.View {
     // state of this View here. This includes freeing resources from
     // memory.
     function onHide() {
+    	stopLogging();
+    	saveLogging();
     }
 
 	function vibrate(){
