@@ -13,10 +13,11 @@ var timer1 = null;
 var stepsCount = 0;
 var accel = null;
 
-var STEP_LENGTH = 0.95;
-var SENSITIVITY = 0.1;
-var BETA = 0.01;
+var STEP_LENGTH = 0.95; //users walking step length
+var SENSITIVITY = 0.1; //percent of the variance that signal is over signal's mean+variance
+var BETA = 0.01; //low pass filter coeficient
 
+//fit logging and session
 var mLogger = null;
 var fitField_distance = null;
 var mSession = null;
@@ -29,11 +30,10 @@ var x_filtered = new[MAX_SAMPLES];
 var mean;
 var variance;
 
-var ready_to_save = false;
 var last_maximum = 0;
 var last_minimum = 0;
 
-
+//for System.println logging variables
 var counter = 0;
 var buffer = "";
 
@@ -66,18 +66,7 @@ class EllipticalView extends Ui.View {
 		    	
 		    	var filtered_x_accel = store_x_and_calc(x_accel);
 		    			    			    	
-		    	counter++;
-		    	if(counter>100){		    		
-		    		System.println(buffer);
-		    		buffer = "";
-		    	}		 
-		    	
-		    
-		    	
-		    	
-		    	
-		    	buffer+=(Sys.getTimer()+";"+stepsCount+";"+current_direction+";"+x_accel+";"+filtered_x_accel+";"+mean+";"+";"+variance+";"+last_maximum+";"+last_minimum+"#");
-		    			    	
+		    				    	
 		    	var new_direction = direction(current_direction, filtered_x_accel, mean, variance);
 		    	
 		    	if(new_direction != current_direction && new_direction != 0){
@@ -101,6 +90,15 @@ class EllipticalView extends Ui.View {
 		    	}
 		    	
 		    	current_direction = new_direction;
+		    	
+		    	counter++;
+		    	if(counter>100){		    		
+		    		System.println(buffer);
+		    		buffer = "";
+		    	}		 
+		    	
+		    	buffer+=(Sys.getTimer()+";"+stepsCount+";"+current_direction+";"+x_accel+";"+filtered_x_accel+";"+mean+";"+";"+variance+";"+last_maximum+";"+last_minimum+"#");
+		    
 	    	}
 	}
 	
@@ -122,20 +120,24 @@ class EllipticalView extends Ui.View {
 		
 		x_filtered = filter_lowpass(x_history, max);
 		
-		var buff="";
-		for(var j=0;j<max;j++){
-			buff+=x_filtered[j]+";";
-		}
-		System.println(buff);
+		
 		
 		mean = calc_mean(x_filtered, max);
 		variance = calc_variance(x_filtered, mean, max);	
+		
+		/*buffer="";
+		System.println("#"+max+", mean="+mean+", variance="+variance);
+		for(var j=0;j<MAX_SAMPLES;j++){
+			buffer=""+x_history[j]+";"+x_filtered[j];
+			System.println(buffer);
+		}*/
+		
 		
 		return x_filtered[max-1];	
 	}
 	
 	function filter_lowpass(records, max){
-		var filt = new [max];
+		var filt = new [MAX_SAMPLES];
 		
 		if(max == 1){
 			filt[0] = records[0];
@@ -179,9 +181,9 @@ class EllipticalView extends Ui.View {
 	}
 	
 	function direction(current_direction, x_accel, mean, variance){
-		if((x_accel - (variance + mean)).abs() > SENSITIVITY * variance){
+		if(x_accel - (variance + mean) > SENSITIVITY * variance){
 				return 1;			
-		}if(((variance - mean) - x_accel).abs() > SENSITIVITY * variance){
+		}if(x_accel- (variance - mean) < -1 * SENSITIVITY * variance){
 				return -1;
 		}else{		
 			return 0;
