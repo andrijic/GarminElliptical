@@ -14,18 +14,25 @@ var stepsCount = 0;
 var accel = null;
 
 var STEP_LENGTH = 0.95;
-var SENSITIVITY = 450;
+var SENSITIVITY = 0.1;
+var BETA = 0.01;
 
 var mLogger = null;
 var fitField_distance = null;
 var mSession = null;
 
 var current_direction = 0;
-var samples_recorded = 0;
-var mean_sum = 0;
+var MAX_SAMPLES = 8;
+var x_history = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
+var records_recorded = 0;
+var x_filtered = new[MAX_SAMPLES];
+var mean;
+var variance;
+
 var ready_to_save = false;
 var last_maximum = 0;
 var last_minimum = 0;
+
 
 var counter = 0;
 var buffer = "";
@@ -40,7 +47,6 @@ class EllipticalView extends Ui.View {
 	}
 	
 	function updateFitData(){
-		System.println("recording data: "+stepsCount * STEP_LENGTH);
 		fitField_distance.setData(stepsCount * STEP_LENGTH);
 	}
 	
@@ -50,78 +56,118 @@ class EllipticalView extends Ui.View {
     	accel = info.accel;
     	
     	
-	    	if (info has :accel && info.accel != null) {
-		    	var x_accel = accel[0];
+	    	//if (info has :accel && info.accel != null) {
+	    	{
+		    	/*var x_accel = accel[0];
 		    	var y_accel = accel[1];
-		    	var z_accel = accel[2];		    	 
+		    	var z_accel = accel[2];	*/	    	 
 		    	
+		    	var x_accel = Math.sin(counter);
 		    	
-		    	
-		    	var samples_sum = 0;
-		    	
-		    	/*for(var i=0; i<SAMPLES_NUM; i++){
-		    		samples_sum += samples[i];
-		    	}*/
-		    	
-		    	//var mean = samples_sum/SAMPLES_NUM;
-		    	++samples_recorded;
-		    	mean_sum = mean_sum + x_accel;
-		    	var mean = mean_sum/samples_recorded;
-		    	
+		    	var filtered_x_accel = store_x_and_calc(x_accel);
+		    			    			    	
 		    	counter++;
 		    	if(counter>100){		    		
 		    		System.println(buffer);
 		    		buffer = "";
 		    	}		 
 		    	
-		    	buffer+=(Sys.getTimer()+";"+stepsCount+";"+current_direction+";"+x_accel+";"+y_accel+";"+mean+";"+last_maximum+";"+last_minimum+"#");
+		    
 		    	
-		    	if(current_direction == 0){
-		    		current_direction = direction(x_accel - mean);
-		    	}else if(current_direction != direction(x_accel - mean)){
-		    		current_direction = direction(x_accel - mean); //direction changed, record new direction
-		    		ready_to_save = true;
+		    	
+		    	
+		    	buffer+=(Sys.getTimer()+";"+stepsCount+";"+current_direction+";"+x_accel+";"+filtered_x_accel+";"+mean+";"+";"+variance+";"+last_maximum+";"+last_minimum+"#");
+		    			    	
+		    	var new_direction = direction(current_direction, filtered_x_accel, mean, variance);
+		    	
+		    	if(new_direction != current_direction && new_direction != 0){
+		    		stepsCount++;
 		    		
-		    		if(current_direction < 0){
+		    		if(new_direction < 0){
 		    			last_minimum = 0; //reset minimum to record latest fresh minimum values
 		    		}else{
 		    			last_maximum = 0; //reset maximum to record latest fresh minimum values
-		    		}
-		    		
+		    		}		    		
 		    	}
-		    	
-		    	if(ready_to_save == true){
-		    		/* only increment step count if significant change detected*/
-		    		if(current_direction < 0){
-		    			if(last_maximum - x_accel > SENSITIVITY){
-			    			stepsCount++;
-			    			ready_to_save = false;
-		    			}		    			
-		    		}else if(current_direction > 0){
-		    			if(x_accel - last_minimum > SENSITIVITY){
-			    			stepsCount++;
-			    			ready_to_save = false;
-		    			}		    			
+		    			    	    	
+		    	if(new_direction < 0){
+		    		if(filtered_x_accel < last_minimum){
+		    			last_minimum = filtered_x_accel; //lower minimum value detected
+		    		}
+		    	}else if(new_direction > 0){
+		    		if(filtered_x_accel > last_maximum){
+		    			last_maximum = filtered_x_accel; //higher maximum value detected
 		    		}
 		    	}
 		    	
-		    	/**recording history values, mean and maximums**/
-		    	/*for(var i=0; i<SAMPLES_NUM-1; i++){
-		    		samples[i] = samples[i+1];
-		    	}*
-		    	
-		    	samples[SAMPLES_NUM-1] = x_accel;*/		    	
-		    	
-		    	if(current_direction < 0){
-		    		if(x_accel < last_minimum){
-		    			last_minimum = x_accel; //lower minimum value detected
-		    		}
-		    	}else if(current_direction > 0){
-		    		if(x_accel > last_maximum){
-		    			last_maximum = x_accel; //higher maximum value detected
-		    		}
-		    	}
+		    	current_direction = new_direction;
 	    	}
+	}
+	
+	function store_x_and_calc(x){
+		if(records_recorded < MAX_SAMPLES){
+			x_history[records_recorded] = x;
+		}else{
+			for(var i=0;i<MAX_SAMPLES-1;i++){
+				x_history[i]=x_history[i+1];
+			}
+			x_history[MAX_SAMPLES-1] = x;
+		}
+		records_recorded++;
+		
+		var max = MAX_SAMPLES;
+		if(records_recorded < MAX_SAMPLES){
+			max = records_recorded;
+		}
+		
+		x_filtered = filter_lowpass(x_history, max);
+		
+		var buff="";
+		for(var j=0;j<max;j++){
+			buff+=x_filtered[j]+";";
+		}
+		System.println(buff);
+		
+		mean = calc_mean(x_filtered, max);
+		variance = calc_variance(x_filtered, mean, max);	
+		
+		return x_filtered[max-1];	
+	}
+	
+	function filter_lowpass(records, max){
+		var filt = new [max];
+		
+		if(max == 1){
+			filt[0] = records[0];
+		}else{
+			filt[0] = records[0];
+			for(var i=1;i<max;i++){
+				filt[i] = records[i-1]*BETA + records[i]*(1 - BETA);
+			}
+		}
+		
+		return filt;
+	}
+	
+	function calc_mean(records, max){
+		
+		var sum = 0;
+		for(var i=0;i<max;i++){
+			sum += records[i];
+		}
+		
+		return sum/max;
+	}
+	
+	function calc_variance(records, mean_input, max){
+		
+		
+		var sum = 0;
+		for(var i=0;i<max;i++){
+			sum += Math.pow(mean_input - records[i], 2);
+		}
+		
+		return Math.sqrt(sum)/max;
 	}
 	
 	function abs(input){
@@ -132,11 +178,13 @@ class EllipticalView extends Ui.View {
 		}
 	}
 	
-	function direction(input){
-		if(input >= 0){
-			return 1;
-		}else{
-			return -1;
+	function direction(current_direction, x_accel, mean, variance){
+		if((x_accel - (variance + mean)).abs() > SENSITIVITY * variance){
+				return 1;			
+		}if(((variance - mean) - x_accel).abs() > SENSITIVITY * variance){
+				return -1;
+		}else{		
+			return 0;
 		}
 	}
 	
@@ -211,7 +259,7 @@ class EllipticalView extends Ui.View {
     // memory.
     function onHide() {
     	stopLogging();
-    	saveLogging();
+    	//saveLogging();
     }
 
 	function vibrate(){
