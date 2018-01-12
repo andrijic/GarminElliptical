@@ -219,21 +219,14 @@ class EllipticalView extends Ui.View {
   	function startLogging() {
     	mSession.start();
 	}
-
-	function stopLogging() {
-    	mSession.stop();
-	}
-
+	
 	function saveLogging() {
     	mSession.save();
 	}
-    
-    /*function getDebugData(){
-    	
-    		return last_x+", "+last_y+", "+last_z;
-    	
-    }*/
-	
+		
+	function stopLogging() {
+    	mSession.stop();
+	}
 
     // Load your resources here
     function onLayout(dc) {
@@ -251,8 +244,8 @@ class EllipticalView extends Ui.View {
     // Called when this View is brought to the foreground. Restore
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
-    function onShow() {
-    	//startLogging();
+    function onShow() {    
+    	startLogging();
     }
 
     // Update the view
@@ -272,8 +265,7 @@ class EllipticalView extends Ui.View {
     // state of this View here. This includes freeing resources from
     // memory.
     function onHide() {
-    	//stopLogging();
-    	//saveLogging();
+    	stopLogging();    	
     }
 
 	function vibrate(){
