@@ -14,7 +14,7 @@ var stepsCount = 0;
 var accel = null;
 
 var STEP_LENGTH = 0.95; //users walking step length
-var SENSITIVITY = 0.1; //percent of the variance that signal is over signal's mean+variance
+var SENSITIVITY = 150; //minimum absolute value deviation from the mean+deviation
 var BETA = 0.01; //low pass filter coeficient
 
 //fit logging and session
@@ -23,12 +23,15 @@ var fitField_distance = null;
 var mSession = null;
 
 var current_direction = 0;
-var MAX_SAMPLES = 8;
-var x_history = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
+var MAX_SAMPLES = 20;
+var x_history = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var records_recorded = 0;
 var x_filtered = new[MAX_SAMPLES];
 var mean;
 var variance;
+
+var MAX_IDLE_TIME = 1500; //1.5 seconds idle time max
+var laststep_time = null;
 
 var last_maximum = 0;
 var last_minimum = 0;
@@ -56,13 +59,13 @@ class EllipticalView extends Ui.View {
     	accel = info.accel;
     	
     	
-	    	//if (info has :accel && info.accel != null) {
-	    	{
-		    	/*var x_accel = accel[0];
+	    	if (info has :accel && info.accel != null) {	    	
+		    	var x_accel = accel[0];
 		    	var y_accel = accel[1];
-		    	var z_accel = accel[2];	*/	    	 
+		    	var z_accel = accel[2];		    	 
 		    	
-		    	var x_accel = Math.sin(counter);
+		    	
+		    //	{var x_accel = Math.sin(counter);
 		    	
 		    	var filtered_x_accel = store_x_and_calc(x_accel);
 		    			    			    	
@@ -70,7 +73,16 @@ class EllipticalView extends Ui.View {
 		    	var new_direction = direction(current_direction, filtered_x_accel, mean, variance);
 		    	
 		    	if(new_direction != current_direction && new_direction != 0){
-		    		stepsCount++;
+		    		if(laststep_time != null &&
+		    			Sys.getTimer() - laststep_time < MAX_IDLE_TIME){
+		    			stepsCount++;
+		    		}else{
+		    			/*ommit this step increment because MAX_IDLE_TIME expired,
+			    		previous step shouldn't have been counted*/
+			    		System.println("ommiting last step");
+		    		}
+		    		
+		    		laststep_time = Sys.getTimer(); 
 		    		
 		    		if(new_direction < 0){
 		    			last_minimum = 0; //reset minimum to record latest fresh minimum values
@@ -181,9 +193,9 @@ class EllipticalView extends Ui.View {
 	}
 	
 	function direction(current_direction, x_accel, mean, variance){
-		if(x_accel - (variance + mean) > SENSITIVITY * variance){
+		if(x_accel - (variance + mean) > SENSITIVITY){
 				return 1;			
-		}if(x_accel- (variance - mean) < -1 * SENSITIVITY * variance){
+		}if(x_accel- (variance - mean) < -1 * SENSITIVITY){
 				return -1;
 		}else{		
 			return 0;
@@ -240,7 +252,7 @@ class EllipticalView extends Ui.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() {
-    	startLogging();
+    	//startLogging();
     }
 
     // Update the view
@@ -260,7 +272,7 @@ class EllipticalView extends Ui.View {
     // state of this View here. This includes freeing resources from
     // memory.
     function onHide() {
-    	stopLogging();
+    	//stopLogging();
     	//saveLogging();
     }
 
