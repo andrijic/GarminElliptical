@@ -8,18 +8,22 @@ using Toybox.Attention;
 using Toybox.System as Sys;
 using Toybox.FitContributor as FitContributor;
 using Toybox.ActivityRecording;
+using Toybox.Activity;
 
 var timer1 = null;
 var stepsCount = 0;
 var accel = null;
 
-var STEP_LENGTH = 0.95; //users walking step length
-var SENSITIVITY = 150; //minimum absolute value deviation from the mean+deviation
+var stride_length = 0; //length of walked steps in meters
+var STEP_LENGTH = 0.95; //users walking step length in meters
+var SENSITIVITY =  150; //minimum absolute value deviation from the mean+deviation
 var BETA = 0.01; //low pass filter coeficient
 
 //fit logging and session
 var mLogger = null;
 var fitField_distance = null;
+var fitField_speed = null;
+var fitField_cadence = null;
 var mSession = null;
 
 var current_direction = 0;
@@ -41,16 +45,27 @@ var counter = 0;
 var buffer = "";
 
 class EllipticalView extends Ui.View {
-    
+
+	function handleSettingsChanged(){
+		SENSITIVITY = Application.getApp().getProperty("sensitivity_prop");
+		MAX_SAMPLES = Application.getApp().getProperty("samples_prop");
+	}
+	    
     function secondPassedEvent(){
     	countSteps();
+    	
+    	stride_length = stepsCount * STEP_LENGTH;
+    	
 	    updateFitData();
 	    	    
 		Ui.requestUpdate();
 	}
 	
 	function updateFitData(){
-		fitField_distance.setData(stepsCount * STEP_LENGTH);
+		
+		fitField_distance.setData(stride_length);
+		fitField_speed.setData(2.5);
+		fitField_cadence.setData(60);
 	}
 	
 	function countSteps(){
@@ -212,8 +227,16 @@ class EllipticalView extends Ui.View {
         	:subSport=>ActivityRecording.SUB_SPORT_ELLIPTICAL
         	});
                        
-        fitField_distance = mSession.createField("elliptical", 0, FitContributor.DATA_TYPE_FLOAT,  
-        { :mesgType=>FitContributor.MESG_TYPE_RECORD, :units=>"m" });//, :nativeNum=>5}); //5 ili 9
+        fitField_distance = mSession.createField("distance", 0, FitContributor.DATA_TYPE_FLOAT,  
+        { :mesgType=>FitContributor.MESG_TYPE_RECORD, :units=>"m", :nativeNum=>5}); 
+        
+        fitField_speed = mSession.createField("speed", 1, FitContributor.DATA_TYPE_FLOAT,  
+        { :mesgType=>FitContributor.MESG_TYPE_RECORD, :units=>"m/s", :nativeNum=>6}); 
+        
+         fitField_cadence = mSession.createField("cadence", 2, FitContributor.DATA_TYPE_FLOAT,  
+        { :mesgType=>FitContributor.MESG_TYPE_RECORD, :units=>"rpm", :nativeNum=>4}); 
+        
+        handleSettingsChanged(); //load properties
     }
     
   	function startLogging() {
@@ -258,6 +281,21 @@ class EllipticalView extends Ui.View {
         dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_TRANSPARENT);
         
         dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) - 20, Gfx.FONT_LARGE, stepsCount, Gfx.TEXT_JUSTIFY_CENTER );
+        
+        var pom = stride_length.format("%2d")+"m";
+        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + 20, Gfx.FONT_SYSTEM_LARGE, pom, Gfx.TEXT_JUSTIFY_CENTER );
+        
+        var info = Activity.getActivityInfo();
+        var calories = "";        
+        
+        if(info != null){
+        	calories = info.calories;
+        	if(calories == null){
+        		calories = 0;
+        	}
+        }
+        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + -60, Gfx.FONT_SYSTEM_LARGE, calories, Gfx.TEXT_JUSTIFY_CENTER );
+        
         //dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2)+10, Gfx.FONT_SMALL, getDebugData(), Gfx.TEXT_JUSTIFY_CENTER );
     }
 

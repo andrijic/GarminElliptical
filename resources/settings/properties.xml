@@ -1,0 +1,4 @@
+<properties>
+    <property id="sensitivity_prop" type="number">150</property>
+    <property id="samples_prop" type="number">20</property>
+</properties>

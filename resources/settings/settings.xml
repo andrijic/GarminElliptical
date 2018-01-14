@@ -1,0 +1,12 @@
+<settings>
+
+    <setting propertyKey="@Properties.sensitivity_prop" title="@Strings.sensitivity_prop_title">
+        <settingConfig type="numeric" required="true" min="0" max="800"/>
+    </setting>
+	
+	<setting propertyKey="@Properties.samples_prop" title="@Strings.samples_prop_title">
+        <settingConfig type="numeric" required="true" min="5" max="25"/>
+    </setting>
+ 
+
+</settings>

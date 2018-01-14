@@ -3,6 +3,8 @@
 
     <string id="prompt">Click the menu button</string>
 
-    <string id="menu_label_1">Item 1</string>
-    <string id="menu_label_2">Item 2</string>
+    <string id="menu_label_1">Sesnsor sensitivity</string>
+    <string id="menu_label_2">Adaptability</string>
+    <string id="sensitivity_prop_title">Sensor sensitivity (higher number less sensitive)</string>
+    <string id="samples_prop_title">Adaptability (lower number more adaptable)</string>
 </strings>

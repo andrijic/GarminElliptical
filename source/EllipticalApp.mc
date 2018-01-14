@@ -3,6 +3,8 @@ using Toybox.WatchUi as Ui;
 
 class EllipticalApp extends App.AppBase {
 
+	var mView = null;
+
     function initialize() {
         AppBase.initialize();
     }
@@ -17,7 +19,12 @@ class EllipticalApp extends App.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() {
-        return [ new EllipticalView(), new EllipticalDelegate() ];
+    	mView = new EllipticalView();
+        return [ mView, new EllipticalDelegate() ];
+    }
+    
+    function onSettingsChanged(){
+    	mView.handleSettingsChanged();
     }
 
 }
