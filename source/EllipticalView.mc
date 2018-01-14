@@ -16,7 +16,7 @@ var accel = null;
 
 var stride_length = 0; //length of walked steps in meters
 var STEP_LENGTH = 0.95; //users walking step length in meters
-var SENSITIVITY =  150; //minimum absolute value deviation from the mean+deviation
+var SENSITIVITY = 150; //minimum absolute value deviation from the mean+deviation
 var BETA = 0.01; //low pass filter coeficient
 
 //fit logging and session
@@ -40,6 +40,13 @@ var laststep_time = null;
 var last_maximum = 0;
 var last_minimum = 0;
 
+
+var last_recorded_speed_steps = 0;
+var last_recorded_speed_time = Sys.getTimer();
+var last_recorded_cadence = 0;
+var last_recorded_speed = 0;
+var SPEED_RECORDING_STEP = 2000;
+
 //for System.println logging variables
 var counter = 0;
 var buffer = "";
@@ -55,17 +62,30 @@ class EllipticalView extends Ui.View {
     	countSteps();
     	
     	stride_length = stepsCount * STEP_LENGTH;
-    	
+    	calc_speed_and_cadence();
+    	  
 	    updateFitData();
 	    	    
 		Ui.requestUpdate();
 	}
 	
+	function calc_speed_and_cadence(){
+		var delta = Sys.getTimer() - last_recorded_speed_time;
+		
+		if(delta > SPEED_RECORDING_STEP){
+			last_recorded_speed = ((stepsCount-last_recorded_speed_steps) * STEP_LENGTH*1000)/delta; //m/s
+			last_recorded_cadence = ((stepsCount - last_recorded_speed_steps)/delta)*60000; //rpm
+			
+			last_recorded_speed_steps = stepsCount;
+			last_recorded_speed_time = Sys.getTimer();
+		}
+	}
+	
 	function updateFitData(){
 		
 		fitField_distance.setData(stride_length);
-		fitField_speed.setData(2.5);
-		fitField_cadence.setData(60);
+		fitField_speed.setData(last_recorded_speed);
+		fitField_cadence.setData(last_recorded_cadence);
 	}
 	
 	function countSteps(){
@@ -220,11 +240,14 @@ class EllipticalView extends Ui.View {
 	function initialize() {
         View.initialize();
         
+        
+      
+        
         //mLogger = new SensorLogging.SensorLogger({:enableAccelerometer => true});
         mSession = ActivityRecording.createSession({
         	:name=>"myElliptical", 
-        	:sport=>ActivityRecording.SPORT_GENERIC ,
-        	:subSport=>ActivityRecording.SUB_SPORT_ELLIPTICAL
+        	:sport=>ActivityRecording.SPORT_RUNNING,
+        	:subSport=>ActivityRecording.SUB_SPORT_GENERIC 
         	});
                        
         fitField_distance = mSession.createField("distance", 0, FitContributor.DATA_TYPE_FLOAT,  
@@ -296,6 +319,7 @@ class EllipticalView extends Ui.View {
         }
         dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + -60, Gfx.FONT_SYSTEM_LARGE, calories, Gfx.TEXT_JUSTIFY_CENTER );
         
+        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + -100, Gfx.FONT_SYSTEM_LARGE, last_recorded_speed, Gfx.TEXT_JUSTIFY_CENTER );
         //dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2)+10, Gfx.FONT_SMALL, getDebugData(), Gfx.TEXT_JUSTIFY_CENTER );
     }
 
