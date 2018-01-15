@@ -16,8 +16,8 @@ var accel = null;
 
 var stride_length = 0; //length of walked steps in meters
 var STEP_LENGTH = 0.95; //users walking step length in meters
-var SENSITIVITY = 150; //minimum absolute value deviation from the mean+deviation
-var BETA = 0.01; //low pass filter coeficient
+var SENSITIVITY = 0; //minimum absolute value deviation from the mean+deviation
+var BETA = 0.3; //low pass filter coeficient
 
 //fit logging and session
 var mLogger = null;
@@ -27,7 +27,7 @@ var fitField_cadence = null;
 var mSession = null;
 
 var current_direction = 0;
-var MAX_SAMPLES = 20;
+var MAX_SAMPLES = 3;
 var x_history = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var records_recorded = 0;
 var x_filtered = new[MAX_SAMPLES];
@@ -45,7 +45,7 @@ var last_recorded_speed_steps = 0;
 var last_recorded_speed_time = Sys.getTimer();
 var last_recorded_cadence = 0;
 var last_recorded_speed = 0;
-var SPEED_RECORDING_STEP = 2000;
+var SPEED_RECORDING_STEP = 4000;
 
 //for System.println logging variables
 var counter = 0;
@@ -74,7 +74,7 @@ class EllipticalView extends Ui.View {
 		
 		if(delta > SPEED_RECORDING_STEP){
 			last_recorded_speed = ((stepsCount-last_recorded_speed_steps) * STEP_LENGTH*1000)/delta; //m/s
-			last_recorded_cadence = ((stepsCount - last_recorded_speed_steps)/delta)*60000; //rpm
+			last_recorded_cadence = ((stepsCount - last_recorded_speed_steps)*60000)/delta; //rpm
 			
 			last_recorded_speed_steps = stepsCount;
 			last_recorded_speed_time = Sys.getTimer();
@@ -165,20 +165,10 @@ class EllipticalView extends Ui.View {
 			max = records_recorded;
 		}
 		
-		x_filtered = filter_lowpass(x_history, max);
-		
-		
-		
+		x_filtered = x_history; //filter_lowpass(x_history, max);
+			
 		mean = calc_mean(x_filtered, max);
 		variance = calc_variance(x_filtered, mean, max);	
-		
-		/*buffer="";
-		System.println("#"+max+", mean="+mean+", variance="+variance);
-		for(var j=0;j<MAX_SAMPLES;j++){
-			buffer=""+x_history[j]+";"+x_filtered[j];
-			System.println(buffer);
-		}*/
-		
 		
 		return x_filtered[max-1];	
 	}
@@ -228,9 +218,9 @@ class EllipticalView extends Ui.View {
 	}
 	
 	function direction(current_direction, x_accel, mean, variance){
-		if(x_accel - (variance + mean) > SENSITIVITY){
+		if((x_accel - mean - variance) > SENSITIVITY && (x_accel - mean > 0) ){
 				return 1;			
-		}if(x_accel- (variance - mean) < -1 * SENSITIVITY){
+		}if((x_accel - mean + variance) < SENSITIVITY && (x_accel - mean < 0) ){
 				return -1;
 		}else{		
 			return 0;
@@ -303,7 +293,7 @@ class EllipticalView extends Ui.View {
         dc.clear();
         dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_TRANSPARENT);
         
-        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) - 20, Gfx.FONT_LARGE, stepsCount, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) - 20, Gfx.FONT_LARGE, stepsCount + " steps", Gfx.TEXT_JUSTIFY_CENTER );
         
         var pom = stride_length.format("%2d")+"m";
         dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + 20, Gfx.FONT_SYSTEM_LARGE, pom, Gfx.TEXT_JUSTIFY_CENTER );
@@ -317,9 +307,17 @@ class EllipticalView extends Ui.View {
         		calories = 0;
         	}
         }
-        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + -60, Gfx.FONT_SYSTEM_LARGE, calories, Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + -60, Gfx.FONT_SYSTEM_LARGE, calories + " cal", Gfx.TEXT_JUSTIFY_CENTER );
         
-        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + -100, Gfx.FONT_SYSTEM_LARGE, last_recorded_speed, Gfx.TEXT_JUSTIFY_CENTER );
+        if(last_recorded_speed == 0){
+        	pom = "inf.";
+        }else{
+        	pom = Math.ceil(1000/(last_recorded_speed*60));
+        }
+        
+        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + -100, Gfx.FONT_SYSTEM_LARGE,  pom + " min/km", Gfx.TEXT_JUSTIFY_CENTER );
+        
+        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + 60, Gfx.FONT_SYSTEM_LARGE, last_recorded_cadence + " rpm", Gfx.TEXT_JUSTIFY_CENTER );
         //dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2)+10, Gfx.FONT_SMALL, getDebugData(), Gfx.TEXT_JUSTIFY_CENTER );
     }
 
