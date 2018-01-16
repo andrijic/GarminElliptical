@@ -15,8 +15,8 @@ var stepsCount = 0;
 var accel = null;
 
 var stride_length = 0; //length of walked steps in meters
-var STEP_LENGTH = 0.95; //users walking step length in meters
-var SENSITIVITY = 0; //minimum absolute value deviation from the mean+deviation
+var STEP_LENGTH = 0.95f; //users walking step length in meters
+var SENSITIVITY = 150; //minimum absolute value deviation from the mean+deviation
 var BETA = 0.3; //low pass filter coeficient
 
 //fit logging and session
@@ -27,7 +27,7 @@ var fitField_cadence = null;
 var mSession = null;
 
 var current_direction = 0;
-var MAX_SAMPLES = 3;
+var MAX_SAMPLES = 5;
 var x_history = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var records_recorded = 0;
 var x_filtered = new[MAX_SAMPLES];
@@ -45,7 +45,7 @@ var last_recorded_speed_steps = 0;
 var last_recorded_speed_time = Sys.getTimer();
 var last_recorded_cadence = 0;
 var last_recorded_speed = 0;
-var SPEED_RECORDING_STEP = 4000;
+var SPEED_RECORDING_STEP = 1500;
 
 //for System.println logging variables
 var counter = 0;
@@ -72,8 +72,8 @@ class EllipticalView extends Ui.View {
 	function calc_speed_and_cadence(){
 		var delta = Sys.getTimer() - last_recorded_speed_time;
 		
-		if(delta > SPEED_RECORDING_STEP){
-			last_recorded_speed = ((stepsCount-last_recorded_speed_steps) * STEP_LENGTH*1000)/delta; //m/s
+		if(delta > SPEED_RECORDING_STEP && delta > 0 && delta != null){
+			last_recorded_speed = ((stepsCount-last_recorded_speed_steps) * STEP_LENGTH * 1000)/delta; //m/s
 			last_recorded_cadence = ((stepsCount - last_recorded_speed_steps)*60000)/delta; //rpm
 			
 			last_recorded_speed_steps = stepsCount;
@@ -94,13 +94,13 @@ class EllipticalView extends Ui.View {
     	accel = info.accel;
     	
     	
-	    	if (info has :accel && info.accel != null) {	    	
+	    	/*if (info has :accel && info.accel != null) {	    	
 		    	var x_accel = accel[0];
 		    	var y_accel = accel[1];
 		    	var z_accel = accel[2];		    	 
 		    	
 		    	
-		    //	{var x_accel = Math.sin(counter);
+		    //*/	{var x_accel = 200*Math.sin(counter);
 		    	
 		    	var filtered_x_accel = store_x_and_calc(x_accel);
 		    			    			    	
@@ -166,9 +166,11 @@ class EllipticalView extends Ui.View {
 		}
 		
 		x_filtered = x_history; //filter_lowpass(x_history, max);
-			
+		
+		/*	
 		mean = calc_mean(x_filtered, max);
-		variance = calc_variance(x_filtered, mean, max);	
+		variance = calc_variance(x_filtered, mean, max);
+		*/	
 		
 		return x_filtered[max-1];	
 	}
@@ -218,13 +220,28 @@ class EllipticalView extends Ui.View {
 	}
 	
 	function direction(current_direction, x_accel, mean, variance){
+	
+		if(current_direction == 1 && x_accel < last_maximum - SENSITIVITY){
+			current_direction = -1;
+		}else if(current_direction == -1 && x_accel > last_minimum + SENSITIVITY){
+			current_direction = 1;
+		}else if (current_direction == 0){
+			if(x_accel > 0){
+				return 1;
+			}else{
+				return -1;
+			}
+		}
+		
+		return current_direction;
+		/*
 		if((x_accel - mean - variance) > SENSITIVITY && (x_accel - mean > 0) ){
 				return 1;			
 		}if((x_accel - mean + variance) < SENSITIVITY && (x_accel - mean < 0) ){
 				return -1;
 		}else{		
-			return 0;
-		}
+			return current_direction;
+		}*/
 	}
 	
 	function initialize() {
@@ -309,16 +326,17 @@ class EllipticalView extends Ui.View {
         }
         dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + -60, Gfx.FONT_SYSTEM_LARGE, calories + " cal", Gfx.TEXT_JUSTIFY_CENTER );
         
+        var pom2 = 0.0;
         if(last_recorded_speed == 0){
-        	pom = "inf.";
+        	pom2 = 1000;
         }else{
-        	pom = Math.ceil(1000/(last_recorded_speed*60));
+        	pom2 = Math.ceil(16.66/last_recorded_speed);
         }
         
-        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + -100, Gfx.FONT_SYSTEM_LARGE,  pom + " min/km", Gfx.TEXT_JUSTIFY_CENTER );
+        dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + -90, Gfx.FONT_SYSTEM_LARGE,  pom2.format("%2.1f") + " min/km", Gfx.TEXT_JUSTIFY_CENTER );
         
         dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2) + 60, Gfx.FONT_SYSTEM_LARGE, last_recorded_cadence + " rpm", Gfx.TEXT_JUSTIFY_CENTER );
-        //dc.drawText( dc.getWidth()/2, (dc.getHeight() / 2)+10, Gfx.FONT_SMALL, getDebugData(), Gfx.TEXT_JUSTIFY_CENTER );
+        
     }
 
     // Called when this View is removed from the screen. Save the
