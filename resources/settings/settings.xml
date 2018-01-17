@@ -4,8 +4,12 @@
         <settingConfig type="numeric" required="true" min="0" max="800"/>
     </setting>
 	
-	<setting propertyKey="@Properties.samples_prop" title="@Strings.samples_prop_title">
+	<!--setting propertyKey="@Properties.samples_prop" title="@Strings.samples_prop_title">
         <settingConfig type="numeric" required="true" min="5" max="25"/>
+    </setting-->
+    
+    <setting propertyKey="@Properties.stepcount_correction_ratio" title="@Strings.stepcount_correction_ratio_title">
+        <settingConfig type="numeric" required="true" min="0" max="100"/>
     </setting>
  
 

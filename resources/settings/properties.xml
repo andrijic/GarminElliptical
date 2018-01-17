@@ -1,4 +1,5 @@
 <properties>
     <property id="sensitivity_prop" type="number">150</property>
-    <property id="samples_prop" type="number">20</property>
+    <!--property id="samples_prop" type="number">20</property-->
+    <property id="stepcount_correction_ratio" type="float">1.10</property>
 </properties>

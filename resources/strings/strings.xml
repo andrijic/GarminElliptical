@@ -7,4 +7,5 @@
     <string id="menu_label_2">Adaptability</string>
     <string id="sensitivity_prop_title">Sensor sensitivity (higher number less sensitive)</string>
     <string id="samples_prop_title">Adaptability (lower number more adaptable)</string>
+    <string id="stepcount_correction_ratio_title">Step count correction factor [percent 0-100]</string>
 </strings>

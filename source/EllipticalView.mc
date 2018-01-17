@@ -17,6 +17,7 @@ var accel = null;
 var stride_length = 0; //length of walked steps in meters
 var STEP_LENGTH = 0.95f; //users walking step length in meters
 var SENSITIVITY = 150; //minimum absolute value deviation from the mean+deviation
+var STEPCOUNTCORRECTION = 1.10;
 var BETA = 0.3; //low pass filter coeficient
 
 //fit logging and session
@@ -51,18 +52,27 @@ var SPEED_RECORDING_STEP = 1500;
 var counter = 0;
 var buffer = "";
 
+var lapRecorded = false;
+
 class EllipticalView extends Ui.View {
 
 	function handleSettingsChanged(){
 		SENSITIVITY = Application.getApp().getProperty("sensitivity_prop");
-		MAX_SAMPLES = Application.getApp().getProperty("samples_prop");
+		//MAX_SAMPLES = Application.getApp().getProperty("samples_prop");
+		STEPCOUNTCORRECTION = 1+Application.getApp().getProperty("stepcount_correction_ratio")/100; //data setting in percent units
 	}
 	    
     function secondPassedEvent(){
     	countSteps();
     	
-    	stride_length = stepsCount * STEP_LENGTH;
+    	stride_length = stepsCount * STEP_LENGTH * STEPCOUNTCORRECTION; //m
     	calc_speed_and_cadence();
+    	
+    	if(stride_length >= 1000 & lapRecorded == false){
+    		vibrate();
+    		mSession.addLap(); // record lap and inform runner of 1000m
+    		lapRecorded = true;
+    	}
     	  
 	    updateFitData();
 	    	    
@@ -73,8 +83,8 @@ class EllipticalView extends Ui.View {
 		var delta = Sys.getTimer() - last_recorded_speed_time;
 		
 		if(delta > SPEED_RECORDING_STEP && delta > 0 && delta != null){
-			last_recorded_speed = ((stepsCount-last_recorded_speed_steps) * STEP_LENGTH * 1000)/delta; //m/s
-			last_recorded_cadence = ((stepsCount - last_recorded_speed_steps)*60000)/delta; //rpm
+			last_recorded_speed = ((stepsCount-last_recorded_speed_steps) * STEP_LENGTH * STEPCOUNTCORRECTION * 1000)/delta; //m/s
+			last_recorded_cadence = ((stepsCount - last_recorded_speed_steps)*60000*STEPCOUNTCORRECTION)/delta; //rpm
 			
 			last_recorded_speed_steps = stepsCount;
 			last_recorded_speed_time = Sys.getTimer();
@@ -94,7 +104,7 @@ class EllipticalView extends Ui.View {
     	accel = info.accel;
     	
     	
-	    	/*if (info has :accel && info.accel != null) {	    	
+	    	if (info has :accel && info.accel != null) {	    	
 		    	var x_accel = accel[0];
 		    	var y_accel = accel[1];
 		    	var z_accel = accel[2];		    	 
@@ -328,7 +338,7 @@ class EllipticalView extends Ui.View {
         
         var pom2 = 0.0;
         if(last_recorded_speed == 0){
-        	pom2 = 1000;
+        	pom2 = 100;
         }else{
         	pom2 = Math.ceil(16.66/last_recorded_speed);
         }
@@ -350,5 +360,16 @@ class EllipticalView extends Ui.View {
   		if (Attention has :playTone) {
 	    	Attention.playTone(Attention.TONE_LOUD_BEEP);
 		}
+		if (Attention has :vibrate) {
+    		var vibeData =
+    		[
+		        new Attention.VibeProfile(50, 2000), // On for two seconds
+		        new Attention.VibeProfile(0, 1000),  // Off for two seconds
+		        new Attention.VibeProfile(50, 2000), // On for two seconds
+		        new Attention.VibeProfile(0, 1000),  // Off for two seconds
+		        new Attention.VibeProfile(50, 2000)  // on for two seconds
+    		];
+    		Attention.vibrate(vibeData);
+    	}
 	}
 }
